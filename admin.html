@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>InkSprout Admin</title>
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='80'%3E%F0%9F%8C%B1%3C/text%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body class="admin-body">
+
+<!-- ============ LOGIN SCREEN ============ -->
+<div id="loginScreen" class="login-screen">
+  <form id="loginForm" class="login-card">
+    <div class="login-brand">
+      <svg class="brand-mark" viewBox="0 0 120 100" aria-hidden="true">
+        <path d="M60 46c0-16 0-30 0-44" stroke="#3DDC97" stroke-width="6" stroke-linecap="round" fill="none"/>
+        <path d="M60 24c-16 0-28-10-30-28 18 0 32 10 30 28Z" fill="#3DDC97"/>
+        <path d="M60 14c14 0 25-9 27-23-16 0-29 9-27 23Z" fill="#9BF0C9"/>
+        <path d="M60 52c-16-9-34-10-54 0v44c17-9 36-8 54 8Z" fill="#FFFFFF"/>
+        <path d="M60 52c16-9 34-10 54 0v44c-17-9-36-8-54 8Z" fill="#FFE3A3"/>
+      </svg>
+      <span>InkSprout Admin</span>
+    </div>
+    <p class="login-sub">Sign in to manage your library.</p>
+    <label class="field-label" for="passwordInput">Password</label>
+    <input type="password" id="passwordInput" class="field-input" autocomplete="current-password" required>
+    <p id="loginError" class="form-error" hidden></p>
+    <button type="submit" class="btn btn-primary" id="loginBtn">Log in</button>
+    <p class="login-hint">First time here? Set <code>ADMIN_PASSWORD</code> in your Apps Script's Script Properties — see README.md.</p>
+  </form>
+</div>
+
+<!-- ============ DASHBOARD ============ -->
+<div id="dashboard" class="dashboard" hidden>
+
+  <header class="admin-topbar">
+    <div class="wrap admin-topbar-inner">
+      <span class="brand admin-brand">
+        <svg class="brand-mark" viewBox="0 0 120 100" aria-hidden="true">
+          <path d="M60 46c0-16 0-30 0-44" stroke="#3DDC97" stroke-width="6" stroke-linecap="round" fill="none"/>
+          <path d="M60 24c-16 0-28-10-30-28 18 0 32 10 30 28Z" fill="#3DDC97"/>
+          <path d="M60 14c14 0 25-9 27-23-16 0-29 9-27 23Z" fill="#9BF0C9"/>
+          <path d="M60 52c-16-9-34-10-54 0v44c17-9 36-8 54 8Z" fill="#FFFFFF"/>
+          <path d="M60 52c16-9 34-10 54 0v44c-17-9-36-8-54 8Z" fill="#FFE3A3"/>
+        </svg>
+        <span>InkSprout <span class="admin-tag">Admin</span></span>
+      </span>
+      <div class="topbar-actions">
+        <a href="index.html" target="_blank" class="btn btn-ghost btn-sm">View live site ↗</a>
+        <button id="logoutBtn" class="btn btn-ghost btn-sm">Log out</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap admin-main">
+
+    <section class="stats-grid" id="statsGrid" aria-label="Summary stats"></section>
+
+    <section class="panel">
+      <div class="panel-head toolbar">
+        <div>
+          <h2>Clicks by book</h2>
+          <p>Preview opens and buy-link clicks tracked from the live site.</p>
+        </div>
+        <button id="exportClicksBtn" class="btn btn-ghost btn-sm">Export CSV</button>
+      </div>
+      <div class="chart-wrap">
+        <canvas id="clicksChart" height="110"></canvas>
+      </div>
+      <p id="noAnalytics" class="empty-note" hidden>No clicks tracked yet — once visitors use the live site, data appears here.</p>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head toolbar">
+        <div>
+          <h2>"Notify me" leads</h2>
+          <p>Emails captured from sold-out books, newest first.</p>
+        </div>
+        <button id="exportLeadsBtn" class="btn btn-ghost btn-sm">Export CSV</button>
+      </div>
+      <div class="table-scroll">
+        <table class="admin-table">
+          <thead><tr><th>Email</th><th>Book</th><th>When</th></tr></thead>
+          <tbody id="leadsTableBody"></tbody>
+        </table>
+      </div>
+      <p id="noLeads" class="empty-note" hidden>No leads captured yet.</p>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head toolbar">
+        <div>
+          <h2>Your books</h2>
+          <p>Add, edit, or change the status of anything in your library.</p>
+        </div>
+        <div style="display:flex;gap:10px;">
+          <button id="exportBooksBtn" class="btn btn-ghost">Export CSV</button>
+          <button id="addBookBtn" class="btn btn-primary">+ Add new book</button>
+        </div>
+      </div>
+
+      <div class="table-controls">
+        <input type="search" id="adminSearch" class="search-input" placeholder="Search books...">
+        <select id="statusFilter" class="field-select">
+          <option value="all">All statuses</option>
+          <option value="live">Live</option>
+          <option value="draft">Draft</option>
+          <option value="sold-out">Sold out</option>
+        </select>
+      </div>
+
+      <div class="table-scroll">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Title</th>
+              <th>Category</th>
+              <th>Price</th>
+              <th>Status</th>
+              <th>Clicks</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="booksTableBody"></tbody>
+        </table>
+      </div>
+      <p id="noBooks" class="empty-note" hidden>No books match your search.</p>
+    </section>
+
+  </main>
+</div>
+
+<!-- ============ ADD / EDIT MODAL ============ -->
+<div id="bookModal" class="modal-overlay" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-head">
+      <h3 id="modalTitle">Add new book</h3>
+      <button type="button" class="modal-close" id="modalClose" aria-label="Close">&times;</button>
+    </div>
+    <form id="bookForm" class="modal-form">
+      <input type="hidden" id="f_originalId">
+      <div class="form-grid">
+        <div class="field">
+          <label class="field-label" for="f_id">ID (slug, no spaces) *</label>
+          <input class="field-input" id="f_id" required pattern="[a-z0-9-]+" title="lowercase letters, numbers, hyphens only">
+        </div>
+        <div class="field">
+          <label class="field-label" for="f_status">Status</label>
+          <select class="field-select" id="f_status">
+            <option value="live">Live</option>
+            <option value="draft">Draft</option>
+            <option value="sold-out">Sold out</option>
+          </select>
+        </div>
+        <div class="field field-wide">
+          <label class="field-label" for="f_title">Title *</label>
+          <input class="field-input" id="f_title" required>
+        </div>
+        <div class="field field-wide">
+          <label class="field-label" for="f_tagline">Tagline</label>
+          <input class="field-input" id="f_tagline">
+        </div>
+        <div class="field">
+          <label class="field-label" for="f_category">Category</label>
+          <input class="field-input" id="f_category" placeholder="e.g. Self-Help">
+        </div>
+        <div class="field">
+          <label class="field-label" for="f_pages">Pages</label>
+          <input class="field-input" id="f_pages" type="number" min="1">
+        </div>
+        <div class="field">
+          <label class="field-label" for="f_price">Price (₹) *</label>
+          <input class="field-input" id="f_price" type="number" min="0" required>
+        </div>
+        <div class="field">
+          <label class="field-label" for="f_originalPrice">Original price (₹)</label>
+          <input class="field-input" id="f_originalPrice" type="number" min="0">
+        </div>
+        <div class="field field-wide">
+          <label class="field-label" for="f_coverImage">Cover image path</label>
+          <input class="field-input" id="f_coverImage" placeholder="assets/covers/your-file.jpg">
+        </div>
+        <div class="field field-wide">
+          <label class="field-label" for="f_description">Description</label>
+          <textarea class="field-input" id="f_description" rows="2"></textarea>
+        </div>
+        <div class="field field-wide">
+          <label class="field-label" for="f_previewLink">Preview (Google Drive) link</label>
+          <input class="field-input" id="f_previewLink" type="url">
+        </div>
+        <div class="field">
+          <label class="field-label" for="f_gumroadLink">Gumroad link</label>
+          <input class="field-input" id="f_gumroadLink" type="url">
+        </div>
+        <div class="field">
+          <label class="field-label" for="f_creatlyLink">Creatly link</label>
+          <input class="field-input" id="f_creatlyLink" type="url">
+        </div>
+        <div class="field">
+          <label class="field-label" for="f_otherLinkLabel">Other platform label</label>
+          <input class="field-input" id="f_otherLinkLabel" placeholder="e.g. Instamojo">
+        </div>
+        <div class="field">
+          <label class="field-label" for="f_otherLink">Other platform link</label>
+          <input class="field-input" id="f_otherLink" type="url">
+        </div>
+      </div>
+      <p id="formError" class="form-error" hidden></p>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" id="cancelBtn">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="saveBtn">Save book</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ============ DELETE CONFIRM ============ -->
+<div id="deleteModal" class="modal-overlay" hidden>
+  <div class="modal modal-sm" role="dialog" aria-modal="true">
+    <h3>Delete this book?</h3>
+    <p id="deleteBookName" class="delete-name"></p>
+    <p class="delete-warning">This removes it from your Sheet permanently. The live site stops showing it within a few minutes.</p>
+    <div class="modal-actions">
+      <button type="button" class="btn btn-ghost" id="deleteCancelBtn">Cancel</button>
+      <button type="button" class="btn btn-danger" id="deleteConfirmBtn">Delete</button>
+    </div>
+  </div>
+</div>
+
+<div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="config.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>

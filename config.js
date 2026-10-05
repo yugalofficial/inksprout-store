@@ -1,0 +1,4 @@
+const CONFIG = {
+  APPS_SCRIPT_URL: "",
+  FETCH_TIMEOUT_MS: 6000
+};

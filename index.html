@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>InkSprout — Honest guides, written to be used</title>
+<meta name="description" content="InkSprout writes practical, honest ebooks on side income, ebook creation, personal growth, and relationships — written for real life, not highlight reels.">
+
+<meta property="og:title" content="InkSprout — Honest guides, written to be used">
+<meta property="og:description" content="Practical ebooks on side income, ebook creation, personal growth, and relationships. No fake screenshots, no overnight promises.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/covers/side-income.jpg">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='80'%3E%F0%9F%8C%B1%3C/text%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="preload" as="image" href="assets/covers/side-income.jpg">
+<link rel="preload" as="image" href="assets/covers/ebook-blueprint.jpg">
+<link rel="preload" as="image" href="assets/covers/comeback-blueprint.jpg">
+<link rel="preload" as="image" href="assets/covers/relationship-blueprint.jpg">
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="topProgress" class="top-progress" aria-hidden="true"></div>
+
+<div id="preloader" class="preloader" aria-hidden="true">
+  <svg class="preloader-mark" viewBox="0 0 120 100" aria-hidden="true">
+    <path d="M60 46c0-16 0-30 0-44" stroke="#3DDC97" stroke-width="6" stroke-linecap="round" fill="none"/>
+    <path d="M60 24c-16 0-28-10-30-28 18 0 32 10 30 28Z" fill="#3DDC97"/>
+    <path d="M60 14c14 0 25-9 27-23-16 0-29 9-27 23Z" fill="#9BF0C9"/>
+    <path d="M60 52c-16-9-34-10-54 0v44c17-9 36-8 54 8Z" fill="#FFFFFF"/>
+    <path d="M60 52c16-9 34-10 54 0v44c-17-9-36-8-54 8Z" fill="#FFE3A3"/>
+  </svg>
+  <span class="preloader-text">InkSprout</span>
+</div>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a href="#top" class="brand">
+      <svg class="brand-mark" viewBox="0 0 120 100" aria-hidden="true">
+        <path d="M60 46c0-16 0-30 0-44" stroke="#3DDC97" stroke-width="6" stroke-linecap="round" fill="none"/>
+        <path d="M60 24c-16 0-28-10-30-28 18 0 32 10 30 28Z" fill="#3DDC97"/>
+        <path d="M60 14c14 0 25-9 27-23-16 0-29 9-27 23Z" fill="#9BF0C9"/>
+        <path d="M60 52c-16-9-34-10-54 0v44c17-9 36-8 54 8Z" fill="#FFFFFF"/>
+        <path d="M60 52c16-9 34-10 54 0v44c-17-9-36-8-54 8Z" fill="#FFE3A3"/>
+      </svg>
+      <span>InkSprout</span>
+    </a>
+    <nav class="main-nav">
+      <a href="#library">Library</a>
+      <a href="#about">About</a>
+      <a href="https://instagram.com/inksprout.store" target="_blank" rel="noopener">Instagram</a>
+      <button type="button" id="savedNavBtn" class="saved-nav-btn" aria-label="View saved books">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 21s-7.5-4.8-10-9.3C.3 8.4 2 5 5.5 5c2 0 3.4 1 4.5 2.3C11.1 6 12.5 5 14.5 5 18 5 19.7 8.4 18 11.7 15.5 16.2 12 21 12 21z" fill="currentColor"/></svg>
+        <span id="savedCount">0</span>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="wrap hero-inner">
+      <div class="hero-copy">
+        <p class="hero-kicker">InkSprout Library</p>
+        <h1>Honest guides.<br>No hype.</h1>
+        <p class="hero-lede">Four practical ebooks on side income, ebook creation, personal growth, and relationships — written by one person who actually uses what's inside them, not a marketing team.</p>
+        <div class="hero-actions">
+          <a href="#library" class="btn btn-primary">Browse the library</a>
+          <a href="#about" class="btn btn-ghost">Why InkSprout</a>
+        </div>
+      </div>
+      <div class="hero-shelf" aria-hidden="true">
+        <img class="shelf-cover c1" src="assets/covers/side-income.jpg" alt="">
+        <img class="shelf-cover c2" src="assets/covers/ebook-blueprint.jpg" alt="">
+        <img class="shelf-cover c3" src="assets/covers/comeback-blueprint.jpg" alt="">
+        <img class="shelf-cover c4" src="assets/covers/relationship-blueprint.jpg" alt="">
+      </div>
+    </div>
+  </section>
+
+  <section id="library" class="library">
+    <div class="wrap">
+      <div class="library-head reveal">
+        <h2>Pick your next read</h2>
+        <p>Every guide is a standalone PDF — read it on your phone, no app required.</p>
+      </div>
+
+      <div class="library-controls">
+        <input type="search" id="searchInput" class="search-input" placeholder="Search guides..." aria-label="Search guides">
+        <div class="filter-pills" id="filterPills" role="group" aria-label="Filter by category"></div>
+      </div>
+
+      <div id="bookGrid" class="book-grid" aria-live="polite"></div>
+      <p id="emptyState" class="empty-state" hidden>No guides match that search. Try a different word or category.</p>
+    </div>
+  </section>
+
+  <section id="about" class="about">
+    <div class="wrap about-inner">
+      <div class="about-copy reveal">
+        <h2>Why InkSprout</h2>
+        <p>I'm Yugal — a student who got tired of self-help and side-income content that oversold the outcome and skipped the actual process. InkSprout is the honest version: real steps, real timelines, and a clear note whenever I can't back a claim up.</p>
+        <p>Every guide ends with a chapter that names the hype directly — because you should know what's genuinely proven before you spend a weekend on it.</p>
+        <a href="https://linkedin.com/in/yugalofficial" target="_blank" rel="noopener" class="btn btn-ghost">Connect on LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span>© <span id="year"></span> InkSprout. All guides are original work.</span>
+    <a href="https://instagram.com/inksprout.store" target="_blank" rel="noopener">@inksprout.store</a>
+  </div>
+</footer>
+
+<!-- ============ QUICK VIEW MODAL ============ -->
+<div id="quickViewModal" class="qv-overlay" hidden>
+  <div class="qv-modal" role="dialog" aria-modal="true" aria-labelledby="qvTitle">
+    <button type="button" class="qv-close" id="qvClose" aria-label="Close">&times;</button>
+    <div id="qvContent" class="qv-content"></div>
+  </div>
+</div>
+
+<button type="button" id="backToTop" class="back-to-top" aria-label="Back to top" hidden>
+  <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 5l-7 7h4v7h6v-7h4z" fill="currentColor"/></svg>
+</button>
+
+<div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+<script src="config.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
