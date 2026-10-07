@@ -1,4 +1,4 @@
 const CONFIG = {
-  APPS_SCRIPT_URL: "https://script.google.com/macros/s/AKfycbxO2ASmy92wUBuaTHb5gksv6jTPZ9PKtNhpGwQ0hHCDCR9kyo-5gP5Y2D4j0aADzzkP-Q/exec",
+  APPS_SCRIPT_URL: "https://script.google.com/macros/s/AKfycbzlMAAefYaIehWshfCtl_0O7S3p5MoOIHQZHGTsubY6Zdw9pR3cZi8mU7ogFa4tgTonvw/exec",
   FETCH_TIMEOUT_MS: 6000
 };
